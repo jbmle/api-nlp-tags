@@ -1,0 +1,4 @@
+api_tags_env/
+__pycache__/
+utilities.txt
+.pytest_cache
