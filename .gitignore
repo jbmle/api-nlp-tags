@@ -3,3 +3,4 @@ __pycache__/
 utilities.txt
 .pytest_cache
 env/
+.azure
