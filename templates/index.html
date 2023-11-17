@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prédicteur de Tags</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+        #tags-output {
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #f1f1f1;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Prédicteur de Tags</h2>
+    <input type="text" id="question-input" placeholder="Entrez votre question">
+    <button onclick="predictTags()">Prédire</button>
+    <div id="tags-output"></div>
+
+    <script>
+        function predictTags() {
+            var question = document.getElementById('question-input').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/predict", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    displayTags(response.tags);
+                }
+            };
+            var data = JSON.stringify({"question": question});
+            xhr.send(data);
+        }
+
+        function displayTags(tags) {
+            var tagsOutput = document.getElementById('tags-output');
+            tagsOutput.innerHTML = '';
+            tags.forEach(function(tag) {
+                var span = document.createElement('span');
+                span.className = 'tag';
+                span.textContent = tag;
+                tagsOutput.appendChild(span);
+            });
+        }
+    </script>
+</body>
+</html>
