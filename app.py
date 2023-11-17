@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 from model_module import TagPredictor
 
 app = Flask(__name__)
+CORS(app)
 
 # instance de la classe de modèle
 model = TagPredictor()
